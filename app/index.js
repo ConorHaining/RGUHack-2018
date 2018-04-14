@@ -1,19 +1,15 @@
 const express         = require('express');
 const app             = express();
+const mongoose        = require('mongoose');
 
-const MongoClient     = require('mongodb').MongoClient;
-const databaseURL     = "mongodb://hackuser:hackuser@csdm-mongodb.rgu.ac.uk/hackais";
-const database        = await MongoClient.connect(databaseURL);
-const db              = database.db("hackais");
-const cVessels        = db.collection('vessels');
-const cPositions      = db.collection('positions');
-const cTowns          = db.collection('towns');
+const db              = require('database.js')(mongoose);
+
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+
 });
 
-app.get("/vessel/callsign/:callsign", (req, res) => {
+app.get("/vessel/callsign/:callsign", (req, res, next) => {
 
 });
 
