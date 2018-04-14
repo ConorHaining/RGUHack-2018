@@ -1,12 +1,34 @@
 const express         = require('express');
 const app             = express();
 const mongoose        = require('mongoose');
-
 const db              = require('./database.js')(mongoose);
+const bodyParser      = require("body-parser");
 
+// Setup view engine
+app.set('view engine', 'ejs');
+// Setup a static folder
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render('index');
+});
+
+app.get('/vessel/MMSI/:mmsi', (req, res) => {
+
+  db.model.Vessel.findOne({MMSI: req.params.mmsi}, (err, vessel) => {
+    if (err) throw err;
+
+    if (vessel === null) {
+      res.sendStatus(404);
+    } else {
+      res.send(vessel);
+    }
+
+  });
+
 });
 
 app.get("api/vessel/callsign/:callsign", (req, res, next) => {
