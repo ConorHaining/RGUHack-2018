@@ -1,5 +1,5 @@
 module.exports = (mongoose) => {
-  const databaseURL     = "mongodb://hackuser:hackuser@csdm-mongodb.rgu.ac.uk/hackais";
+  const databaseURL     = "mongodb://127.0.0.1:27017/hackais";
   // Establish the connection
   mongoose.connect(databaseURL);
 
