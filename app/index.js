@@ -3,6 +3,9 @@ const app             = express();
 const mongoose        = require('mongoose');
 const db              = require('./database.js')(mongoose);
 const bodyParser      = require("body-parser");
+const vessel          = require('./vessel.js')(db);
+
+console.log(vessel);
 
 // Setup view engine
 app.set('view engine', 'ejs');
@@ -19,6 +22,40 @@ app.get("/", (req, res) => {
 app.get('/vessel/MMSI/:mmsi', (req, res) => {
 
   db.model.Vessel.findOne({MMSI: req.params.mmsi}, (err, vessel) => {
+    if (err) throw err;
+
+    if (vessel === null) {
+      res.sendStatus(404);
+    } else {
+
+      res.render("vessel", {ship: vessel});
+
+    }
+
+  });
+
+});
+
+app.get('/vessel/name/:name', (req, res) => {
+
+  db.model.Vessel.findOne({Name: req.params.name}, (err, vessel) => {
+    if (err) throw err;
+
+    if (vessel === null) {
+      res.sendStatus(404);
+    } else {
+
+      res.render("vessel", {ship: vessel});
+
+    }
+
+  });
+
+});
+
+app.get('/vessel/callsign/:callsign', (req, res) => {
+
+  db.model.Vessel.findOne({CallSign: req.params.callsign}, (err, vessel) => {
     if (err) throw err;
 
     if (vessel === null) {
@@ -50,14 +87,9 @@ app.get("/api/vessel/callsign/:callsign", (req, res, next) => {
 
 app.get("/api/vessel/name/:name", (req, res) => {
 
-  db.model.Vessel.findOne({Name: req.params.name}, (err, vessel) => {
-    if (err) throw err;
+  vessel.byName(req.params.name, (ship) => {
 
-    if (vessel === null) {
-      res.sendStatus(404);
-    } else {
-      res.send(vessel);
-    }
+    res.json(ship);
 
   });
 
