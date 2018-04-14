@@ -11,12 +11,22 @@ module.exports = (db) => {
           cb(null);
         } else {
 
-          db.model.Position.find({MMSI: vessel.MMSI}, "Longitude Latitude TrueHeading RecvTime", {sort: {RecvTime: -1}}, (err, positions) => {
+          db.model.Position.find({MMSI: vessel.MMSI}, "Longitude Latitude TrueHeading RecvTime", {sort: {RecvTime: 1}}, (err, positions) => {
+
+            var coordinates = [];
+
+            for (var i = 0; i < positions.length; i++) {
+              coordinates[i] = [
+                positions[i]['Longitude'],
+                positions[i]['Latitude']
+              ]
+            }
 
             var ship = {
               vessel: vessel,
-              positions: positions
-            }
+              positions: positions,
+              coordinates: coordinates
+            };
 
             cb(ship)
 
