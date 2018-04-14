@@ -34,13 +34,15 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-    console.log("hello");
-    $.get("http://localhost:3000/api/vessel/MMSI/<%= ship.MMSI %>", function( data ) {
+    // console.log("hello");
+    $.get("http://localhost:3000/api/vessel/name/<%= ship.vessel.Name %>", function( data ) {
 
       var center = [
-        data.locations[0][0] - 0.5,
-        data.locations[0][1]
+        data.coordinates[0][0] - 0.5,
+        data.coordinates[0][1]
       ]
+
+      console.log(data.coordinates);
 
       map.flyTo({center: center});
 
@@ -54,7 +56,7 @@ map.on('load', function () {
             "properties": {},
             "geometry": {
               "type": "LineString",
-              "coordinates": data.locations
+              "coordinates": data.coordinates
             }
           }
         },
@@ -78,15 +80,15 @@ map.on('load', function () {
       <div class="card">
         <div class="card-image">
           <img src="https://www.fincantieri.com/globalassets/common/grid/other-boxes/02.prodotti-e-servizi/navi-da-crociera/armatori-brandwall-oceania-cruises.jpg">
-          <span class="card-title"><%= ship.Name %></span>
+          <span class="card-title"><%= ship.vessel.Name %></span>
           <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
         </div>
         <div class="card-content">
           <ul>
-            <li><strong>Callsign: </strong><%= ship.CallSign %></li>
+            <li><strong>Callsign: </strong><%= ship.vessel.CallSign %></li>
           </ul>
         </div>
-      </div>
+      </div>ship
     </div>
   </div>
 
