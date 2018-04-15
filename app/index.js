@@ -37,6 +37,14 @@ app.get('/vessel/MMSI/:mmsi', (req, res) => {
 
 });
 
+app.get('/vessel/random', (req, res) => {
+
+  vessel.random((ship) => {
+    res.redirect('/vessel/name/' + ship);
+  });
+
+});
+
 app.get('/vessel/name/:name', (req, res) => {
 
   vessel.byName(req.params.name, (ship) => {
