@@ -4,6 +4,7 @@ const mongoose        = require('mongoose');
 const db              = require('./database.js')(mongoose);
 const bodyParser      = require("body-parser");
 const vessel          = require('./vessel.js')(db);
+const postions        = require('./positions.js')(db);
 
 console.log(vessel);
 
@@ -46,12 +47,24 @@ app.get('/vessel/name/:name', (req, res) => {
 
 });
 
+app.get("/heatmap", (req, res) => {
+  res.render("heatmap")
+});
+
 app.get("/api/vessel/name/:name", (req, res) => {
 
   vessel.byName(req.params.name, (ship) => {
 
     res.json(ship);
 
+  });
+
+});
+
+app.get("/api/positions", (req, res) => {
+
+  postions.all((pos) => {
+    res.json(pos);
   });
 
 });
