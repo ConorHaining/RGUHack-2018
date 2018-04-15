@@ -37,10 +37,18 @@ app.get('/vessel/MMSI/:mmsi', (req, res) => {
 
 });
 
+app.get('/vessel/random', (req, res) => {
+
+  vessel.random((name) => {
+    res.redirect('/vessel/name/' + name);
+  });
+
+});
+
 app.get('/vessel/:page', (req, res) => {
 
   if (req.params.page < 1) {
-    res.sendStatus(404);
+    res.sendStatus(404)
   }
 
   vessel.fetchNames(req.params.page, (names) => {
@@ -50,6 +58,7 @@ app.get('/vessel/:page', (req, res) => {
   });
 
 });
+
 
 app.get('/vessel/name/:name', (req, res) => {
 
