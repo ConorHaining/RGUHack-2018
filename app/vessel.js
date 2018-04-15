@@ -15,7 +15,7 @@ module.exports = (db) => {
           // Tada! random user
           console.log(result)
           data = result.Name;
-          cb(data);                                                                       
+          cb(data);
         })
       });
 
@@ -54,6 +54,24 @@ module.exports = (db) => {
         }
 
       });
+
+    },
+
+    fetchNames: (page, cb) => {
+
+      db.model.Vessel.aggregate(
+        [
+          { "$group": {"_id": "$Name"} },
+          { "$skip": (page - 1) * 20 },
+          { "$limit": 20 }
+        ],
+        (err, names) => {
+          if (err) throw err;
+          console.log(names);
+          cb(names)
+
+        }
+      )
 
     }
 

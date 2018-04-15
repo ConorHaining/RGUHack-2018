@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+   <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+   <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  </head>
+  <body>
+
+  <%- include('nav'); %>
+
+  <ul class="pagination">
+
+    <% if(0 < page - 1) { %>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <% } else { %>
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <% } %>
+
+    <% if(0 < page - 2) { %>
+      <li class="waves-effect"><a href="<%= page - 2%>"><%= page - 2%></a></li>
+    <% } %>
+    <% if(0 < page - 1) { %>
+      <li class="waves-effect"><a href="<%= page - 1%>"><%= page - 1%></a></li>
+    <% } %>
+
+    <li class="active"><a href="<%= page %>"><%= page %></a></li>
+    <li class="waves-effect"><a href="<%= page + 1 %>"><%= page + 1 %></a></li>
+    <li class="waves-effect"><a href="<%= page + 2 %>"><%= page + 2 %></a></li>
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+
+  <div class="collection">
+    <% for( var i = 0; i < names.length; i++){ %>
+      <a href="/vessel/name/<%= names[i]._id %>" class="collection-item"><%= names[i]._id %></a>
+    <% } %>
+  </div>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  </body>
+</html>

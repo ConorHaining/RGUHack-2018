@@ -11,11 +11,7 @@
   </head>
   <body>
 
-  <nav>
-    <div class="nav-wrapper ##009688 teal">
-      <a href="#" class="brand-logo center ">Ship Happens ¯\_(ツ)_/¯ </a>
-    </div>
-  </nav>
+  <%- include('nav'); %>
 
   <!-- <i class="material-icons">directions_boat</i> -->
   <div class="center-align">
@@ -28,8 +24,11 @@
           </div>
           <div class="card-content white-text">
          <p style="Font-size:20px">To begin, either search for a ships name or click for a random ship to be chosen.</p>
-         <a class="waves-effect waves-light btn-large" href="/vessel/random/"><i class="material-icons left">directions_boat</i>Random Vessel</a>
-         <a class="waves-effect waves-light btn-large" href="/heatmap"><i class="material-icons left">flare</i>Heatmap</a>
+       </div>
+          <a class="waves-effect waves-light btn-large" href="/vessel/random"><i class="material-icons left">directions_boat</i>Random Vessel</a>
+          <a class="waves-effect waves-light btn-large" href="/vessel/1"><i class="material-icons left">directions_boat</i>Browses Vessels</a>
+          <a class="waves-effect waves-light btn-large" href="/heatmap"><i class="material-icons left">flare</i>Heatmap</a>
+        </div>
       </div>
     </div>
   </div>
