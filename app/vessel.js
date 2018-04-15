@@ -16,7 +16,7 @@ module.exports = (db) => {
           console.log(result)
           data = result.Name;
           cb(data);
-        })
+        });
       });
 
     },
