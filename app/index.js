@@ -37,6 +37,20 @@ app.get('/vessel/MMSI/:mmsi', (req, res) => {
 
 });
 
+app.get('/vessel/:page', (req, res) => {
+
+  if (req.params.page < 1) {
+    res.sendStatus(404);
+  }
+
+  vessel.fetchNames(req.params.page, (names) => {
+
+    res.render("browse", {names: names, page: parseInt(req.params.page)});
+
+  });
+
+});
+
 app.get('/vessel/name/:name', (req, res) => {
 
   vessel.byName(req.params.name, (ship) => {
