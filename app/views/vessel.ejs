@@ -30,19 +30,48 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY29uaGFpbmluZyIsImEiOiJjamZ6bXJ6OWYxMXU4MnFtb
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v10',
-  zoom: 9
+  zoom: 5
 });
 
 map.on('load', function () {
     // console.log("hello");
     $.get("http://localhost:3000/api/vessel/name/<%= ship.vessel.Name %>", function( data ) {
 
-      var center = [
-        data.coordinates[0][0] - 0.5,
-        data.coordinates[0][1]
-      ]
+      var maxLat = 1000;
+      var minLat = -1000;
+      var maxLong = 1000;
+      var minLong = -1000;
 
-      console.log(data.coordinates);
+      for (var i = 0; i < data.coordinates.length; i++) {
+
+        if (minLat < data.coordinates[i][0]) {
+          minLat = data.coordinates[i][0];
+        }
+
+        if (maxLat > data.coordinates[i][0]) {
+          maxLat = data.coordinates[i][0];
+        }
+
+        if (minLong < data.coordinates[i][1]) {
+          minLong = data.coordinates[i][1];
+        }
+
+        if (maxLong > data.coordinates[i][1]) {
+          maxLong = data.coordinates[i][1];
+        }
+
+      }
+
+      var center = [
+        ((maxLat - minLat) / 2) + minLat - 1.5,
+        ((maxLong - minLong) / 2) + minLong
+      ];
+
+      // console.log(minLat);
+      // console.log(maxLat);
+      // console.log(minLong);
+      // console.log(maxLong);
+      // console.log(center);
 
       map.flyTo({center: center});
 
@@ -76,16 +105,18 @@ map.on('load', function () {
 </script>
 
   <div class="row">
-    <div class="col s12 m6">
+    <div class="col s4">
       <div class="card">
         <div class="card-image">
           <img src="https://www.fincantieri.com/globalassets/common/grid/other-boxes/02.prodotti-e-servizi/navi-da-crociera/armatori-brandwall-oceania-cruises.jpg">
           <span class="card-title"><%= ship.vessel.Name %></span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
         </div>
         <div class="card-content">
           <ul>
             <li><strong>Callsign: </strong><%= ship.vessel.CallSign %></li>
+            <li><strong>Length: </strong><%= ship.vessel.length %>m</li>
+            <li><strong>Width: </strong><%= ship.vessel.width %>m</li>
+            <li><strong>MMSI: </strong><%= ship.vessel.MMSI %></li>
           </ul>
         </div>
       </div>ship
